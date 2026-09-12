@@ -1,0 +1,1 @@
+import Link from'@/components/site-link';export default function NotFound(){return <main className="section not-found"><p className="eyebrow">PAGE NOT FOUND</p><h1>Let’s find your way<br/>back to the collection.</h1><p>The product or page you requested is not available.</p><Link className="button" href="/products/">Explore the collection ↗</Link></main>}

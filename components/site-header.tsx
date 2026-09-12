@@ -1,0 +1,6 @@
+'use client';
+import Link from '@/components/site-link';
+import {Menu} from 'lucide-react';
+import {Sheet,SheetContent,SheetTitle,SheetTrigger} from '@/components/ui/sheet';
+const links=[['Products','/products'],['Match a Spec','/match-my-linen'],['Distributors','/for-distributors'],['Hotels','/for-hotels'],['Customization','/customization'],['Quality','/quality']];
+export function SiteHeader(){return <><div className="topbar"><span>HOTEL BEDDING & BATH LINEN</span><span>Built around U.S. buyer specifications</span></div><header className="header"><Link className="brand" href="/">HOTEL LINEN<span>U.S. HOSPITALITY PROGRAMS</span></Link><nav className="desktop-nav" aria-label="Main navigation">{links.map(([label,href])=><Link key={href} href={href}>{label}</Link>)}</nav><Link href="/request-a-quote" className="button compact desktop-quote">Request a quote ↗</Link><Sheet><SheetTrigger className="mobile-menu-button" aria-label="Open navigation"><Menu size={24}/></SheetTrigger><SheetContent side="right" className="mobile-menu-panel"><SheetTitle className="mobile-menu-title">HOTEL LINEN</SheetTitle><nav aria-label="Mobile navigation">{links.map(([label,href])=><Link key={href} href={href}>{label}</Link>)}</nav><Link href="/request-a-quote" className="button">Request a quote ↗</Link></SheetContent></Sheet></header></>}
