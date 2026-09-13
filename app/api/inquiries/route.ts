@@ -211,7 +211,17 @@ export async function POST(request: Request) {
       .split(',')
       .map((email) => email.trim())
       .filter(Boolean);
-    if (!apiKey || !from || bcc.length === 0) {
+    const missingConfiguration = [
+      !apiKey ? 'RESEND_API_KEY' : '',
+      !from ? 'INQUIRY_FROM_EMAIL' : '',
+      bcc.length === 0 ? 'INQUIRY_BCC_EMAIL' : '',
+    ].filter(Boolean);
+
+    if (missingConfiguration.length) {
+      console.error(
+        'Inquiry email configuration is missing:',
+        missingConfiguration.join(', '),
+      );
       return Response.json(
         { error: 'Inquiry service is temporarily unavailable.' },
         { status: 503 },
@@ -266,3 +276,4 @@ export async function POST(request: Request) {
     );
   }
 }
+
