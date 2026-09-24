@@ -30,4 +30,4 @@
 .language-selector a{font-size:.7rem;letter-spacing:.12em;padding:.35rem .3rem;color:inherit;opacity:.62;text-decoration:none}
 .language-selector a[aria-current="page"]{opacity:1;text-decoration:underline;text-underline-offset:.3rem}
 .mobile-language-selector{justify-content:flex-start;margin:1rem 0}
-@media(max-width:900px){.header>.language-selector{display:none}}
+@media(max-width:1180px){.desktop-nav,.desktop-quote,.header>.language-selector{display:none!important}.mobile-menu-button{display:flex}.header{flex-wrap:nowrap}}
