@@ -26,3 +26,8 @@
 @media(max-width:1100px){.hotel-scenarios{grid-template-columns:repeat(3,1fr)}.site-footer{grid-template-columns:1.6fr repeat(3,1fr)}}
 @media(max-width:800px){.hero-detail{margin-top:-10px}.nine-options,.distributor-features,.hotel-scenarios{grid-template-columns:1fr 1fr}.site-footer{grid-template-columns:1fr 1fr}.site-footer .footer-brand{grid-column:1/-1}.site-footer .footer-bottom{grid-template-columns:1fr}.site-footer .footer-bottom span:last-child{text-align:left}.buyer-value{padding-top:42px}.value-heading{padding:0 6% 28px}.tier-guide{grid-template-columns:1fr}.tier-guide article{border-right:0;border-bottom:1px solid var(--line)}.tier-guide article:last-child{border-bottom:0}}
 @media(max-width:520px){.nine-options,.distributor-features,.hotel-scenarios{grid-template-columns:1fr}.upload-button{display:block!important;width:max-content}.file-name{display:block!important;margin-top:8px}.rfq-success{padding:30px 22px}.rfq-success h2{font-size:32px}.site-footer{grid-template-columns:1fr}.site-footer>div{grid-column:auto!important}}
+.language-selector{display:flex;align-items:center;gap:.25rem;white-space:nowrap}
+.language-selector a{font-size:.7rem;letter-spacing:.12em;padding:.35rem .3rem;color:inherit;opacity:.62;text-decoration:none}
+.language-selector a[aria-current="page"]{opacity:1;text-decoration:underline;text-underline-offset:.3rem}
+.mobile-language-selector{justify-content:flex-start;margin:1rem 0}
+@media(max-width:900px){.header>.language-selector{display:none}}

@@ -23,6 +23,12 @@ const escapeHtml = (value: string) =>
 
 type SavedRfq = { rfq_id: string; opportunity_id: string };
 
+const errors = {
+  en: {required:'Please complete all required procurement fields.',file:'Use a PDF, JPG, PNG or WebP file under 10 MB.',service:'Inquiry service is temporarily unavailable.',failed:'Your request could not be submitted. Please try again or email sales@wjstay.com.'},
+  es: {required:'Complete todos los campos obligatorios de compra.',file:'Use un archivo PDF, JPG, PNG o WebP de menos de 10 MB.',service:'El servicio de consultas no está disponible temporalmente.',failed:'No fue posible enviar su solicitud. Inténtelo de nuevo o escriba a sales@wjstay.com.'},
+  pt: {required:'Preencha todos os campos obrigatórios de compra.',file:'Use um arquivo PDF, JPG, PNG ou WebP com menos de 10 MB.',service:'O serviço de consultas está temporariamente indisponível.',failed:'Não foi possível enviar sua solicitação. Tente novamente ou escreva para sales@wjstay.com.'}
+} as const;
+
 async function saveToCrm(
   payload: Record<string, string | undefined>,
   file: File | null,
@@ -80,8 +86,11 @@ async function saveToCrm(
 }
 
 export async function POST(request: Request) {
+  let locale: keyof typeof errors = 'en';
   try {
     const form = await request.formData();
+    const requestedLocale = getText(form, 'locale', 2);
+    if (requestedLocale === 'es' || requestedLocale === 'pt') locale = requestedLocale;
     if (getText(form, 'website_confirm')) {
       return Response.json({ error: 'Unable to submit.' }, { status: 400 });
     }
@@ -118,7 +127,7 @@ export async function POST(request: Request) {
       !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fields.businessEmail)
     ) {
       return Response.json(
-        { error: 'Please complete all required procurement fields.' },
+        { error: errors[locale].required },
         { status: 400 },
       );
     }
@@ -129,7 +138,7 @@ export async function POST(request: Request) {
     if (file) {
       if (file.size > 10 * 1024 * 1024 || !allowedTypes.has(file.type)) {
         return Response.json(
-          { error: 'Use a PDF, JPG, PNG or WebP file under 10 MB.' },
+          { error: errors[locale].file },
           { status: 400 },
         );
       }
@@ -223,7 +232,7 @@ export async function POST(request: Request) {
         missingConfiguration.join(', '),
       );
       return Response.json(
-        { error: 'Inquiry service is temporarily unavailable.' },
+        { error: errors[locale].service },
         { status: 503 },
       );
     }
@@ -256,7 +265,7 @@ export async function POST(request: Request) {
     if (!response.ok) {
       console.error('Notification provider returned', response.status);
       return Response.json(
-        { error: 'Inquiry service is temporarily unavailable.' },
+        { error: errors[locale].service },
         { status: 502 },
       );
     }
@@ -269,8 +278,7 @@ export async function POST(request: Request) {
     );
     return Response.json(
       {
-        error:
-          'Your request could not be submitted. Please try again or email sales@wjstay.com.',
+        error: errors[locale].failed,
       },
       { status: 500 },
     );
